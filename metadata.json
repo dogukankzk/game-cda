@@ -1,0 +1,5 @@
+{
+  "name": "Royal Decisions",
+  "description": "A 'Sort the Court' style decision game featuring strict OOP architecture, resource management, and pixel-art aesthetics.",
+  "requestFramePermissions": []
+}
