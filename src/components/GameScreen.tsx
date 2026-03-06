@@ -3,6 +3,7 @@ import { Kingdom } from '../game/Kingdom';
 import { Visitor } from '../game/Visitor';
 import { VisitorFactory } from '../game/VisitorFactory';
 import { Background } from './Background';
+import { supabase } from '../services/supabaseClient';
 import { motion, AnimatePresence } from 'motion/react';
 import { Coins, Users, Crown, Check, X, Skull, Trophy, RotateCcw, Sun, Moon } from 'lucide-react';
 
@@ -30,6 +31,45 @@ export default function GameScreen() {
   const nextId = useRef(0);
 
   useEffect(() => {
+    const fetchEvents = async () => {
+        const { data, error } = await supabase
+            .from('event')
+            .select('*');
+        
+        if (error) {
+            console.error('Error fetching events:', error);
+        } else if (data) {
+            // Map Supabase data to VisitorData format
+            const mappedEvents = data.map((event: any) => ({
+                name: event.name || "Inconnu",
+                desc: event.description || event.desc || "...",
+                type: event.type || "commoner",
+                seed: event.seed || event.name || "Random",
+                cost: event.cost_gold || event.cost || 0,
+                rewardGold: event.reward_gold || 0,
+                rewardPop: event.reward_pop || 0,
+                costPop: event.cost_pop || 0,
+                yesLabel: event.yes_label || "Accepter",
+                noLabel: event.no_label || "Refuser",
+                successMsg: event.success_msg,
+                failMsg: event.fail_msg,
+                refuseMsg: event.refuse_msg,
+                requiredTime: event.required_time as 'DAY' | 'NIGHT' | undefined,
+                // New fields for logic
+                minGold: event.min_gold,
+                minPop: event.min_pop,
+                requiredFlag: event.req_flag || event.required_flag,
+                forbiddenFlag: event.forbidden_flag,
+                setFlag: event.set_flag,
+                removeFlag: event.remove_flag,
+                chance: event.chance // Expecting 0.0 to 1.0
+            }));
+            VisitorFactory.addExternalEvents(mappedEvents);
+            console.log('Loaded external events:', mappedEvents.length);
+        }
+    };
+
+    fetchEvents();
     startNewDay();
   }, []);
 
