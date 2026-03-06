@@ -91,7 +91,7 @@ export class VisitorFactory {
             .setName("...")
             .setDescription("Le royaume est calme. Trop calme...")
             .setType("commoner")
-            .setImageUrl(`https://api.dicebear.com/9.x/pixel-art/svg?seed=Quiet`)
+            // .setImageUrl(`https://api.dicebear.com/9.x/pixel-art/svg?seed=Quiet`)
             .setButtons("Attendre", "Dormir")
             .setEffects(() => "Rien ne se passe.", () => "Zzz...")
             .buildGeneric();
@@ -114,7 +114,7 @@ export class VisitorFactory {
         .setName(data.name)
         .setDescription(data.desc)
         .setType(data.type)
-        .setImageUrl(`https://api.dicebear.com/9.x/pixel-art/svg?seed=${data.seed}`)
+        // .setImageUrl(`https://api.dicebear.com/9.x/pixel-art/svg?seed=${data.seed}`)
         .setButtons(data.yesLabel || "Accepter", data.noLabel || "Refuser")
         .setEffects(
             (k) => {

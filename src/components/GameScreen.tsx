@@ -412,38 +412,22 @@ const VisitorCard: React.FC<{
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 10, opacity: 0 }}
             transition={{ type: "spring", stiffness: 400, damping: 30 }}
-            className="w-full flex flex-row items-stretch bg-[#1a1614] border-[3px] border-[#8b7355] rounded-lg shadow-[0_0_0_2px_#000000,0_10px_20px_rgba(0,0,0,0.5)] overflow-hidden mx-auto h-[180px]"
+            className="w-full flex flex-col bg-[#1a1614] border-[3px] border-[#8b7355] rounded-lg shadow-[0_0_0_2px_#000000,0_10px_20px_rgba(0,0,0,0.5)] overflow-hidden mx-auto min-h-[180px]"
         >
-            {/* Portrait Area - Left (Compact) */}
-            <div className="w-32 md:w-40 bg-[#0c0a09] relative shrink-0 border-r-[3px] border-[#8b7355]">
-                {/* Background Texture */}
-                <div className="absolute inset-0 opacity-30 bg-[radial-gradient(#8b7355_1px,transparent_1px)] [background-size:4px_4px]"></div>
-                
-                {/* Image */}
-                <div className="relative z-10 w-full h-full flex items-center justify-center overflow-hidden">
-                    <motion.img 
-                        initial={{ scale: 1.1 }}
-                        animate={{ scale: 1 }}
-                        src={visitor.getImageUrl()} 
-                        alt={visitor.getName()} 
-                        className="w-full h-full object-cover rendering-pixelated"
-                        style={{ imageRendering: 'pixelated' }}
-                    />
-                </div>
-
-                {/* Name Tag (Overlay) */}
-                <div className="absolute bottom-0 left-0 w-full bg-[#1a1614]/95 border-t-[2px] border-[#8b7355] py-1 px-1 text-center">
-                    <h2 className="text-[#e5e5e5] font-pixel text-[10px] md:text-xs tracking-wider uppercase truncate">
-                        {visitor.getName()}
-                    </h2>
-                </div>
+            {/* Name Tag (Header) */}
+            <div className="w-full bg-[#0c0a09] border-b-[2px] border-[#8b7355] py-2 px-4 flex items-center gap-3">
+                <div className="w-2 h-2 bg-[#d4af37] rotate-45"></div>
+                <h2 className="text-[#e5e5e5] font-pixel text-sm md:text-base tracking-wider uppercase truncate flex-1">
+                    {visitor.getName()}
+                </h2>
+                <div className="w-2 h-2 bg-[#d4af37] rotate-45"></div>
             </div>
 
-            {/* Dialogue Area - Right */}
-            <div className="flex-1 p-4 flex flex-col justify-between relative bg-[#26201d]">
+            {/* Dialogue Area */}
+            <div className="flex-1 p-6 flex flex-col justify-between relative bg-[#26201d]">
                 {/* Text */}
-                <div className="relative z-10 overflow-y-auto pr-2 custom-scrollbar">
-                    <p className="text-[#e8dcc5] font-pixel text-xs md:text-sm leading-relaxed tracking-wide drop-shadow-sm">
+                <div className="relative z-10 overflow-y-auto pr-2 custom-scrollbar mb-4">
+                    <p className="text-[#e8dcc5] font-pixel text-sm md:text-base leading-relaxed tracking-wide drop-shadow-sm">
                         "{visitor.getDescription()}"
                         <motion.span 
                             animate={{ opacity: [0, 1, 0] }}
@@ -453,13 +437,13 @@ const VisitorCard: React.FC<{
                     </p>
                 </div>
 
-                {/* Actions (Compact) */}
-                <div className="flex justify-end gap-3 mt-2 pt-2 border-t border-[#8b7355]/30">
+                {/* Actions */}
+                <div className="flex justify-end gap-4 pt-4 border-t border-[#8b7355]/30 mt-auto">
                     <button 
                         onClick={() => onDecide("NO")}
                         disabled={disabled}
                         className={`
-                            group relative py-1.5 px-3 border-[2px] transition-all duration-100 active:translate-y-[1px]
+                            group relative py-2 px-6 border-[2px] transition-all duration-100 active:translate-y-[1px] rounded-sm
                             ${disabled 
                                 ? 'bg-[#2a2320] border-[#4a403a] text-[#5c5048] cursor-not-allowed' 
                                 : 'bg-[#3f1212] border-[#802020] text-[#ffcccc] hover:bg-[#5e1b1b] hover:border-[#a02828] shadow-[2px_2px_0px_rgba(0,0,0,0.5)]'
@@ -467,8 +451,8 @@ const VisitorCard: React.FC<{
                         `}
                     >
                         <div className="flex items-center justify-center gap-2">
-                            <X className="w-3 h-3" />
-                            <span className="font-pixel text-[10px] uppercase">{visitor.getNoLabel()}</span>
+                            <X className="w-4 h-4" />
+                            <span className="font-pixel text-xs uppercase">{visitor.getNoLabel()}</span>
                         </div>
                     </button>
 
@@ -476,7 +460,7 @@ const VisitorCard: React.FC<{
                         onClick={() => onDecide("YES")}
                         disabled={disabled}
                         className={`
-                            group relative py-1.5 px-3 border-[2px] transition-all duration-100 active:translate-y-[1px]
+                            group relative py-2 px-6 border-[2px] transition-all duration-100 active:translate-y-[1px] rounded-sm
                             ${disabled 
                                 ? 'bg-[#2a2320] border-[#4a403a] text-[#5c5048] cursor-not-allowed' 
                                 : 'bg-[#0f2e1b] border-[#1e5c35] text-[#ccffdd] hover:bg-[#164226] hover:border-[#2a804a] shadow-[2px_2px_0px_rgba(0,0,0,0.5)]'
@@ -484,8 +468,8 @@ const VisitorCard: React.FC<{
                         `}
                     >
                         <div className="flex items-center justify-center gap-2">
-                            <Check className="w-3 h-3" />
-                            <span className="font-pixel text-[10px] uppercase">{visitor.getYesLabel()}</span>
+                            <Check className="w-4 h-4" />
+                            <span className="font-pixel text-xs uppercase">{visitor.getYesLabel()}</span>
                         </div>
                     </button>
                 </div>
