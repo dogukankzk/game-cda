@@ -12,23 +12,23 @@ interface VisitorData {
     yesLabel?: string;
     noLabel?: string;
     cost?: number; // Gold cost
-    rewardGold?: number; // Gold reward
-    rewardPop?: number; // Pop reward
-    costPop?: number; // Pop cost
+    rewardgold?: number; // Gold reward
+    rewardpop?: number; // Pop reward
+    costpop?: number; // Pop cost
     chance?: number; // For random outcomes
     successMsg?: string;
     failMsg?: string;
     refuseMsg?: string;
     
     // New Conditions
-    minGold?: number;
-    minPop?: number;
-    requiredTime?: 'DAY' | 'NIGHT';
+    mingold?: number;
+    minpop?: number;
+    requiredtime?: 'DAY' | 'NIGHT';
     requiredFlag?: string;
     forbiddenFlag?: string;
     
     // New Effects
-    setFlag?: string;
+    setflag?: string;
     removeFlag?: string;
 }
 
@@ -124,13 +124,13 @@ export class VisitorFactory {
                 if (data.cost && k.getGold() < data.cost) {
                     return "Pas assez d'or pour accepter cette offre.";
                 }
-                if (data.costPop && k.getPopulation() < data.costPop) {
+                if (data.costpop && k.getPopulation() < data.costpop) {
                     return "Pas assez de population pour accepter cette offre.";
                 }
 
                 // 2. Pay Costs
                 if (data.cost) k.modifyGold(-data.cost);
-                if (data.costPop) k.modifyPopulation(-data.costPop);
+                if (data.costpop) k.modifyPopulation(-data.costpop);
 
                 // 3. Determine Outcome (Chance)
                 let success = true;
@@ -140,11 +140,11 @@ export class VisitorFactory {
 
                 if (success) {
                     // 4. Apply Rewards
-                    if (data.rewardGold) k.modifyGold(data.rewardGold);
-                    if (data.rewardPop) k.modifyPopulation(data.rewardPop);
+                    if (data.rewardgold) k.modifyGold(data.rewardgold);
+                    if (data.rewardpop) k.modifyPopulation(data.rewardpop);
                     
                     // 5. Apply Flags
-                    if (data.setFlag) k.addFlag(data.setFlag);
+                    if (data.setflag) k.addFlag(data.setflag);
                     if (data.removeFlag) k.removeFlag(data.removeFlag);
 
                     return data.successMsg || "Marché conclu.";
